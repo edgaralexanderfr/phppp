@@ -1,0 +1,5 @@
+<?php
+
+require_once __DIR__ . '/php-types';
+require_once __DIR__ . '/php-io';
+require_once __DIR__ . '/php-http';

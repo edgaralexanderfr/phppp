@@ -1,0 +1,20 @@
+{
+    "name": "edgaralexanderfr/phppp",
+    "description": "Bundle with PHP Libraries that extend PHP's capabilities.",
+    "version": "0.0.1",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Edgar Alexander Franco",
+            "email": "edgaralexanderfr@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "scripts": {
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "rm phppp-log.txt && touch phppp-log.txt && tail -f phppp-log.txt"
+        ]
+    },
+    "require": {}
+}
