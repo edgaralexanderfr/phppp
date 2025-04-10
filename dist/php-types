@@ -1,3 +1,3 @@
 <?php
 
-require_once __DIR__ . '/build/php-types/autoload.php';
+require_once __DIR__ . '/bundle/php-types/autoload.php';
