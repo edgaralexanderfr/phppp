@@ -1,0 +1,12 @@
+PHP++ ${VERSION}
+
+Usage:
+  command [action] [arguments]:
+
+Actions:
+  run:
+    dev          Start watching phppp-log.txt file.
+
+Options:
+  -h, --help     Display this help message
+  -v, --version  Display version
