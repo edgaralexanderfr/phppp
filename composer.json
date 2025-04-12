@@ -12,6 +12,14 @@
     "minimum-stability": "stable",
     "bin": "bin/php++",
     "scripts": {
+        "post-package-install": [
+            "Composer\\Config::disableProcessTimeout",
+            "php bin/install.php"
+        ],
+        "pre-package-uninstall": [
+            "Composer\\Config::disableProcessTimeout",
+            "php bin/uninstall.php"
+        ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "rm phppp-log.txt && touch phppp-log.txt && tail -f phppp-log.txt"
