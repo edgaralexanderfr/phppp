@@ -1,7 +1,7 @@
 {
     "name": "edgaralexanderfr/phppp",
     "description": "Bundle with PHP Libraries that extend PHP's capabilities.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "type": "library",
     "authors": [
         {
@@ -12,14 +12,6 @@
     "minimum-stability": "stable",
     "bin": "bin/php++",
     "scripts": {
-        "post-package-install": [
-            "Composer\\Config::disableProcessTimeout",
-            "php bin/install.php"
-        ],
-        "pre-package-uninstall": [
-            "Composer\\Config::disableProcessTimeout",
-            "php bin/uninstall.php"
-        ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "rm phppp-log.txt && touch phppp-log.txt && tail -f phppp-log.txt"
