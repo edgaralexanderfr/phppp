@@ -4,12 +4,13 @@ Usage:
   command [action] [arguments]:
 
 Actions:
-  init           Init new PHP++ project
-  install        Install PHP++ at your configured `include_path`
-  uninstall      Uninstall PHP++ from your configured `include_path`
+  init            Init new PHP++ project
+  install         Install PHP++ at your configured `include_path`
+  uninstall       Uninstall PHP++ from your configured `include_path`
   run
-    dev          Start watching phppp-log.txt file
+    dev           Start watching phppp-log.txt file
 
 Options:
-  -h, --help     Display this help message
-  -v, --version  Display version
+  -h, --help      Display this help message
+  -v, --version   Display version
+  -dr, --dry-run  Only run and evaluate in read-only mode without altering files
