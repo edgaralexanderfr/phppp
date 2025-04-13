@@ -6,6 +6,7 @@ namespace PHPIO;
 
 /**
  * @property array $content
+ * @property array $sub_directories
  * @property array|false $ls
  * @property array|false $files
  */
@@ -35,7 +36,10 @@ class Path implements \Iterator, \JsonSerializable, \Stringable
         return $dir;
     }
 
-    public function copy(Path $dest_path): void
+    /**
+     * @param ?resource $context
+     */
+    public function copy(Path $dest_path, int $permissions = 0777, $context = null): void
     {
         if ($this->full_path === false || $dest_path->full_path === false) {
             return;
@@ -55,11 +59,32 @@ class Path implements \Iterator, \JsonSerializable, \Stringable
 
             @mkdir(
                 directory: $full_dest_path,
-                recursive: true
+                permissions: $permissions,
+                recursive: true,
+                context: $context
             );
 
             @copy($file->full_path, $full_dest_file);
         }
+    }
+
+    /**
+     * @param ?resource $context
+     */
+    public function rm($context = null): void
+    {
+        $content = $this->content;
+        $sub_directories = $this->sub_directories;
+
+        foreach ($content as $file) {
+            $file->rm($context);
+        }
+
+        foreach ($sub_directories as $sub_directory) {
+            @rmdir($sub_directory->full_path, $context);
+        }
+
+        @rmdir($this->full_path, $context);
     }
 
     public function jsonSerialize(): mixed
@@ -129,6 +154,26 @@ class Path implements \Iterator, \JsonSerializable, \Stringable
     }
 
     /** @disregard */
+    public array $sub_directories {
+        /** @disregard */
+        get {
+            $sub_directories = [];
+            $files = $this->files;
+
+            if ($files !== false) {
+                foreach ($files as $file) {
+                    if ($file instanceof self) {
+                        $sub_directories = array_merge($sub_directories, $file->sub_directories);
+                        $sub_directories[] = $file;
+                    }
+                }
+            }
+
+            return $sub_directories;
+        }
+    }
+
+    /** @disregard */
     public array|false $ls {
         /** @disregard */
         get => $this->files;
@@ -153,7 +198,7 @@ class Path implements \Iterator, \JsonSerializable, \Stringable
                     continue;
                 }
 
-                $path = "{$this->path}/{$file}";
+                $path = $this->path . DIRECTORY_SEPARATOR . $file;
 
                 if (is_dir($path)) {
                     $files[] = new self($path);

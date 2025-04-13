@@ -26,6 +26,30 @@ class File implements \JsonSerializable, \Stringable
         return file_get_contents($this->path, $use_include_path, $context, $offset, $length);
     }
 
+    /**
+     * @param ?resource $context
+     */
+    public function delete($context = null): bool
+    {
+        return $this->rm($context);
+    }
+
+    /**
+     * @param ?resource $context
+     */
+    public function unlink($context = null): bool
+    {
+        return $this->rm($context);
+    }
+
+    /**
+     * @param ?resource $context
+     */
+    public function rm($context = null): bool
+    {
+        return @unlink($this->full_path, $context);
+    }
+
     public function jsonSerialize(): mixed
     {
         return $this->file_name;
@@ -37,8 +61,7 @@ class File implements \JsonSerializable, \Stringable
     }
 
     /** @disregard */
-    public string|false $content
-    {
+    public string|false $content {
         /** @disregard */
         get {
             if ($this->cached_content === null) {
